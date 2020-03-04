@@ -1,0 +1,49 @@
+<div class="content" style="height: 100%; background-color: white;">
+    <div class="container-fluid" style="overflow: auto">
+        <div class="row m-1">
+            <div class="mx-3">
+                <p-dropdown [options]="leagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
+            </div>
+            <div class="mx-3">
+                <p-dropdown [options]="teams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value" (onChange)="teamChanged($event)"></p-dropdown>
+            </div>
+            <div class="mx-3">
+                <p-dropdown [options]="rounds" [(ngModel)]="selectedRound" [filter]="true" filterBy="label,value" (onChange)="roundChanged($event)"></p-dropdown>
+            </div>
+            <!--<div class="mx-3">
+                <p-dropdown [options]="period" [(ngModel)]="selectedPeriod" [filter]="true" filterBy="label,value" (onChange)="periodChanged($event)"></p-dropdown>
+            </div>-->
+        </div>
+        <div class="row m-1 justify-content-center">
+            Dostępne mecze:
+        </div>
+        <div class="row m-1 table-wrapper-scroll-y scrollbar">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Gospodarz</th>
+                        <th>Gość</th>
+                        <th>Wynik</th>
+                        <th>Kolejka</th>
+                        <th>Data</th>
+                        <th>Godzina</th>
+                        <th>Typuj</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let event of eventsFiltered">
+                        <td>{{event.strHomeTeam}}</td>
+                        <td>{{event.strAwayTeam}}</td>
+                        <td>{{event.intHomeScore}}:{{event.intAwayScore}}</td>
+                        <td>{{event.intRound}}</td>
+                        <td>{{event.dateEvent}}</td>
+                        <td>{{event.strTimeLocal}}</td>
+                        <td>
+                            <button class="btn btn-success"><i class="pi pi-search"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

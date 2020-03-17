@@ -11,28 +11,36 @@
             <h2>Rejestracja</h2>
         </p-header>
 
-        <form class="form-signin" #f="ngForm" (ngSubmit)="signUp(f.value)">
-            <div class="row m-4" *ngIf="invalidLogin" class="alert alert-danger">
-                Nazwa użytkownika niedostępna
-            </div>
-            <div class="row m-4">
-                <label for="inputUsername" class="sr-only">Nazwa użytkownika</label>  
-                <input type="text" id="inputUsername" name="username" ngModel class="form-control" placeholder="Username" required autofocus>  
-            </div>  
-            <div class="row m-4">
-                <label for="inputPassword" class="sr-only">Hasło</label>  
-                <input type="password" id="inputPassword" name="password" ngModel class="form-control" placeholder="Password" required>
-            </div>
-            <div class="row m-4">
-                <label for="inputPassword" class="sr-only">Powtórz hasło</label>  
-                <input type="password" id="inputPassword" name="password" ngModel class="form-control" placeholder="Password" required>
-            </div>
-            <div class="row m-4">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj się.</button> 
-            </div>  
-            <div class="row mt-4 mb-2 justify-content-center">
-                <a [routerLink]="['/login']">Zaloguj się</a> 
-            </div>
-        </form>
+        <div class="row m-4" *ngIf="!usernameFree" class="alert alert-danger">
+            Nazwa użytkownika niedostępna
+        </div>
 
+        <div class="row m-4" *ngIf="!passwordsEqual" class="alert alert-danger">
+            Hasła nie są takie same
+        </div>
+
+        <div class="row m-4">
+            <label for="inputUsername" class="sr-only">Nazwa użytkownika</label>  
+            <input type="text" id="inputUsernameRegister" name="username" [(ngModel)]="username" (keyup.any)="this.usernameFree = true" class="form-control" placeholder="Nazwa Użytkownika" required autofocus>  
+        </div>  
+
+        <div class="row m-4">
+            <label for="inputPassword" class="sr-only">Hasło</label>  
+            <input type="password" id="inputPasswordRegister1" name="password" [(ngModel)]="password1" (keyup.any)="this.passwordsEqual = true" class="form-control" placeholder="Hasło" required>
+        </div>
+
+        <div class="row m-4">
+            <label for="inputPassword" class="sr-only">Powtórz hasło</label>  
+            <input type="password" id="inputPasswordRegister2" name="password" [(ngModel)]="password2" (keyup.any)="this.passwordsEqual = true" class="form-control" placeholder="Powtórz Hasło" required>
+        </div>
+
+        <div class="row m-4">
+            <button class="btn btn-lg btn-primary btn-block" (click)="signUp()">Zarejestruj się.</button> 
+        </div>  
+
+        <div class="row mt-4 mb-2 justify-content-center">
+            <a [routerLink]="['/login']">Zaloguj się</a> 
+        </div>
 </p-dialog> 
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

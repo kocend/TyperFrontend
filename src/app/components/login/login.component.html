@@ -13,15 +13,15 @@
 
         <form class="form-signin" #f="ngForm" (ngSubmit)="signIn(f.value)">
             <div class="row m-4" *ngIf="invalidLogin" class="alert alert-danger">
-                Niepoprawny login i/lub hasło.
+                Niepoprawna nazwa użytkownika i/lub hasło.
             </div>
             <div class="row m-4">
                 <label for="inputUsername" class="sr-only">Nazwa użytkownika</label>  
-                <input type="text" id="inputUsername" name="username" ngModel class="form-control" placeholder="Username" required autofocus>  
+                <input type="text" id="inputUsername" name="username" ngModel class="form-control" placeholder="Nazwa Użytkownika" required autofocus>  
             </div>  
             <div class="row m-4">
                 <label for="inputPassword" class="sr-only">Hasło</label>  
-                <input type="password" id="inputPassword" name="password" ngModel class="form-control" placeholder="Password" required>
+                <input type="password" id="inputPassword" name="password" ngModel class="form-control" placeholder="Hasło" required>
             </div>
             <div class="row m-4">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się.</button> 

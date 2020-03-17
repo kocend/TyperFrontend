@@ -1,49 +1,75 @@
-<div class="content" style="height: 100%; background-color: white;">
-    <div class="container-fluid" style="overflow: auto">
-        <div class="row m-1">
-            <div class="mx-3">
-                <p-dropdown [options]="leagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
-            </div>
-            <div class="mx-3">
-                <p-dropdown [options]="teams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value" (onChange)="teamChanged($event)"></p-dropdown>
-            </div>
-            <div class="mx-3">
-                <p-dropdown [options]="rounds" [(ngModel)]="selectedRound" [filter]="true" filterBy="label,value" (onChange)="roundChanged($event)"></p-dropdown>
-            </div>
-            <!--<div class="mx-3">
-                <p-dropdown [options]="period" [(ngModel)]="selectedPeriod" [filter]="true" filterBy="label,value" (onChange)="periodChanged($event)"></p-dropdown>
-            </div>-->
+<div class="content h-100 bg-light">
+    <div class="row m-1 mt-3">
+        <div class="mx-3">
+            <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
         </div>
-        <div class="row m-1 justify-content-center">
-            Dostępne mecze:
+        <div class="mx-3">
+            <p-dropdown [options]="availableTeams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value" (onChange)="teamChanged($event)"></p-dropdown>
         </div>
-        <div class="row m-1 table-wrapper-scroll-y scrollbar">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Gospodarz</th>
-                        <th>Gość</th>
-                        <th>Wynik</th>
-                        <th>Kolejka</th>
-                        <th>Data</th>
-                        <th>Godzina</th>
-                        <th>Typuj</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let event of eventsFiltered">
-                        <td>{{event.strHomeTeam}}</td>
-                        <td>{{event.strAwayTeam}}</td>
-                        <td>{{event.intHomeScore}}:{{event.intAwayScore}}</td>
-                        <td>{{event.intRound}}</td>
-                        <td>{{event.dateEvent}}</td>
-                        <td>{{event.strTimeLocal}}</td>
-                        <td>
-                            <button class="btn btn-success"><i class="pi pi-search"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="mx-3">
+            <p-dropdown [options]="availableRounds" [(ngModel)]="selectedRound" [filter]="true" filterBy="label,value" (onChange)="roundChanged($event)"></p-dropdown>
         </div>
     </div>
+    <div class="row m-1 justify-content-center">
+        Dostępne mecze:
+    </div>
+
+    <p-table 
+        [columns]="cols" 
+        [value]="eventsFiltered" 
+        [paginator]="true" 
+        [rows]="5">
+
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+                <th>
+                    Typuj
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+                <td>
+                    <button class="btn btn-success" (click)="showTipDialog(rowData)">
+                        <i class="pi pi-search"></i>
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
+
+<p-dialog [(visible)]="displayTipDialog" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+[draggable]="false" [resizable]="false">
+    <p-header>
+        Twój Typ
+    </p-header>
+    <div *ngIf="selectedEvent!=null" style="font-size: xx-large; font-family: Verdana;">
+        <div class="row mt-1 my-3 justify-content-center">
+            {{selectedEvent.strEvent}}
+        </div>
+        <div class="row mt-1 my-3 justify-content-center" style="font-size: large;">
+            <span class="ui-float-label">
+                <input id="float-input" type="number" size="1" pInputText [(ngModel)]="homeTeamScore"> 
+                <label for="float-input">Gospodarze</label>
+            </span>
+            :
+            <span class="ui-float-label">
+                <input id="float-input" type="number" size="1" pInputText [(ngModel)]="awayTeamScore"> 
+                <label for="float-input">Goście</label>
+            </span>
+        </div>
+    </div>
+    <p-footer>
+        <button class="btn btn-sm btn-success" (click)="saveTip()"><i class="pi pi-check"></i></button>
+        <button class="btn btn-sm btn-danger" (click)="cancelTip()"><i class="pi pi-times"></i></button>
+    </p-footer>
+</p-dialog>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

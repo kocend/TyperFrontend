@@ -1,3 +1,8 @@
+<div class="row m-2 justify-content-end">
+    <p class="m-2" *ngIf="authService.isLoggedIn()">Witaj <b>{{ authService.currentUser.sub }}</b></p> 
+    <button class="btn btn-sm btn-outline-primary" type="button" (click)="logOut()">Wyloguj się</button>
+</div>
+
 <h1 style="text-align: center; font-size: xx-large; height: 10vh;">
     Typer Online
 </h1>

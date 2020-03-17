@@ -1,0 +1,38 @@
+<p-dialog 
+    [(visible)]="displayRegisterDialog" 
+    [modal]="true" 
+    
+    [closable]="false" 
+    [baseZIndex]="10000"
+    [draggable]="false" 
+    [resizable]="false">
+
+        <p-header>
+            <h2>Rejestracja</h2>
+        </p-header>
+
+        <form class="form-signin" #f="ngForm" (ngSubmit)="signUp(f.value)">
+            <div class="row m-4" *ngIf="invalidLogin" class="alert alert-danger">
+                Nazwa użytkownika niedostępna
+            </div>
+            <div class="row m-4">
+                <label for="inputUsername" class="sr-only">Nazwa użytkownika</label>  
+                <input type="text" id="inputUsername" name="username" ngModel class="form-control" placeholder="Username" required autofocus>  
+            </div>  
+            <div class="row m-4">
+                <label for="inputPassword" class="sr-only">Hasło</label>  
+                <input type="password" id="inputPassword" name="password" ngModel class="form-control" placeholder="Password" required>
+            </div>
+            <div class="row m-4">
+                <label for="inputPassword" class="sr-only">Powtórz hasło</label>  
+                <input type="password" id="inputPassword" name="password" ngModel class="form-control" placeholder="Password" required>
+            </div>
+            <div class="row m-4">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj się.</button> 
+            </div>  
+            <div class="row mt-4 mb-2 justify-content-center">
+                <a [routerLink]="['/login']">Zaloguj się</a> 
+            </div>
+        </form>
+
+</p-dialog> 

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { RegisterRequest } from '../models/register-request';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +17,8 @@ export class AuthService {
         return this.http.post<any>('http://localhost:8080/isUsernameFree', username);
     }
 
-    public register(credentials): Observable<any> {
-        return this.http.post<any>('http://localhost:8080/register', credentials);
+    public register(userdata: RegisterRequest): Observable<any> {
+        return this.http.post<any>('http://localhost:8080/register', userdata);
     }
 
     public login(credentials): Observable<any> {

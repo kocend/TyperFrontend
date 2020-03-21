@@ -176,7 +176,8 @@ export class TipsComponent implements OnInit {
                         user_id: 1,
                         game_id: this.selectedEvent.idEvent,
                         home_score: this.homeTeamScore,
-                        away_score: this.awayTeamScore
+                        away_score: this.awayTeamScore,
+                        user_score: null
                     }).subscribe(() => console.log("successfully updated record!"));
             else
                 this.tipService.addTip(
@@ -185,7 +186,8 @@ export class TipsComponent implements OnInit {
                         user_id: 1,
                         game_id: this.selectedEvent.idEvent,
                         home_score: this.homeTeamScore,
-                        away_score: this.awayTeamScore
+                        away_score: this.awayTeamScore,
+                        user_score: null
                     }).subscribe(() => console.log("successfully added record!"));
 
             this.messageService.add({ severity: 'success', summary: 'Zapisano Typ', detail: this.selectedEvent.strEvent + " " + this.homeTeamScore + ":" + this.awayTeamScore });

@@ -15,6 +15,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { PasswordModule } from 'primeng/password';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 import { AccountComponent } from './components/account/account.component';
@@ -53,6 +55,8 @@ import { AuthGuardService } from './services/auth-guard.service';
     ToastModule,
     TableModule,
     PasswordModule,
+    ProgressSpinnerModule,
+    MultiSelectModule,
     HttpClientModule,
     FontAwesomeModule,
     JwtModule

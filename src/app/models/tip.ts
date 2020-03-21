@@ -4,4 +4,5 @@ export interface Tip{
     game_id: number;
     home_score: number;
     away_score: number;
+    user_score: number;
 }

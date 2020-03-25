@@ -28,8 +28,8 @@ export class EventService {
     return this.http.get<Events>("https://www.thesportsdb.com/api/v1/json/1/eventspastleague.php?id="+leagueId);
   }
 
-  getEventById(eventId: number): Observable<Event[]>{
-    return this.http.get<Event[]>(`https://www.thesportsdb.com/api/v1/json/1/lookupevent.php?id=441613`);
+  getEventById(eventId: number): Observable<Events>{
+    return this.http.get<Events>("https://www.thesportsdb.com/api/v1/json/1/lookupevent.php?id="+eventId);
   }
 
   getAllEventsByLeagueIdAndSeason(leagueId: number, season: number): Observable<Events>{

@@ -1,5 +1,5 @@
 <div class="content h-100 bg-light">
-    <div class="row m-1 mt-3">
+    <div class="row m-1 pt-3">
         <div class="mx-3">
             <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
         </div>
@@ -14,31 +14,49 @@
         Dostępne mecze:
     </div>
 
-    <p-table 
+    <p-table
         [columns]="cols" 
         [value]="eventsFiltered" 
         [paginator]="true" 
-        [rows]="5">
+        [rows]="7"
+        [rowHover]="true"
+        [responsive]="true"
+        [autoLayout]="true"
+        [loading]="isLoading"
+        [reorderableColumns]="true">
 
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns">
+                <th *ngFor="let col of columns" 
+                    [pSortableColumn]="col.field" 
+                    pReorderableColumn
+                    style="text-align: center;">
                     {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
-                <th>
+                <th style="text-align: center;">
                     Typuj
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
+            <tr class="ui-selectable-row">
+                <td *ngFor="let col of columns" style="text-align: center;">
+                    <span class="ui-column-title">{{col.header}}</span>
                     {{rowData[col.field]}}
                 </td>
-                <td>
-                    <button class="btn btn-success" (click)="showTipDialog(rowData)">
-                        <i class="pi pi-search"></i>
+                
+                <td style="text-align: center;">
+                    <button class="btn btn-sm btn-outline-primary" (click)="showTipDialog(rowData)">
+                        <i class="pi pi-pencil"></i>
                     </button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+                <td [attr.colspan]="columns.length+1">
+                    Brak meczy.
                 </td>
             </tr>
         </ng-template>
@@ -67,8 +85,8 @@
         </div>
     </div>
     <p-footer>
-        <button class="btn btn-sm btn-success" (click)="saveTip()"><i class="pi pi-check"></i></button>
-        <button class="btn btn-sm btn-danger" (click)="cancelTip()"><i class="pi pi-times"></i></button>
+        <button class="btn btn-sm btn-outline-success" (click)="saveTip()"><i class="pi pi-check"></i></button>
+        <button class="btn btn-sm btn-outline-danger" (click)="cancelTip()"><i class="pi pi-times"></i></button>
     </p-footer>
 </p-dialog>
 

@@ -31,6 +31,7 @@ import { AuthService } from './services/auth.service';
 
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthGuardService } from './services/auth-guard.service';
+import { MyTipsComponent } from './components/my-tips/my-tips.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AuthGuardService } from './services/auth-guard.service';
     TipsComponent,
     HeaderComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MyTipsComponent
   ],
   imports: [
     BrowserModule,

@@ -2,10 +2,21 @@
 
 <div class="row mt-1 mx-3 justify-content-center">
     <div class="mx-3">
-        <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
+        <p-dropdown 
+            [options]="availableLeagues" 
+            [(ngModel)]="selectedLeagueId" 
+            [filter]="true" 
+            filterBy="label,value.strLeague" 
+            (onChange)="leagueChanged($event)">
+        </p-dropdown>
     </div>
     <div class="mx-3">
-        <p-dropdown [options]="availableTeams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value" (onChange)="teamChanged($event)"></p-dropdown>
+        <p-dropdown 
+            [options]="availableTeams" 
+            [(ngModel)]="selectedTeamId" 
+            [filter]="true" filterBy="label,value" 
+            (onChange)="teamChanged($event)">
+        </p-dropdown>
     </div>
 </div>
 
@@ -14,31 +25,48 @@
 </div>
 
 <div class="row justify-content-center">
-    <p-progressSpinner *ngIf="scores==null" [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+    <p-progressSpinner 
+        *ngIf="scores==null" 
+        [style]="{width: '50px', height: '50px'}" 
+        strokeWidth="8" 
+        fill="#EEEEEE" 
+        animationDuration=".5s">
+    </p-progressSpinner>
 </div>
 
 <p-table 
         [columns]="cols" 
         [value]="scores" 
         [paginator]="true" 
-        [rows]="5">
+        [rows]="7"
+        [rowHover]="true"
+        [responsive]="true"
+        [autoLayout]="true"
+        [loading]="isLoading"
+        [reorderableColumns]="true">
 
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th>
+                <th style="text-align: center;">
                     Pozycja
                 </th>
-                <th *ngFor="let col of columns">
+                <th *ngFor="let col of columns"
+                    [pSortableColumn]="col.field" 
+                    pReorderableColumn
+                    style="text-align: center;">
                     {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-            <tr>
+            <tr class="ui-selectable-row"
+                [ngClass]="rowData.username == authService.currentUser.sub ? 'text-primary font-weight-bold' : null">
                 <td>
                     {{rowIndex+1}}
                 </td>
                 <td *ngFor="let col of columns">
+                    <span class="ui-column-title">{{col.header}}</span>
                     {{rowData[col.field]}}
                 </td>
             </tr>

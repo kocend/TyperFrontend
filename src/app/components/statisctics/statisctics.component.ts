@@ -4,6 +4,7 @@ import { SelectItem } from 'primeng/api/selectitem';
 import { Score } from 'src/app/models/score';
 import { LeagueService } from 'src/app/services/league.service';
 import { TeamService } from 'src/app/services/team.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-statisctics',
@@ -12,7 +13,7 @@ import { TeamService } from 'src/app/services/team.service';
 })
 export class StatiscticsComponent implements OnInit {
 
-    public isLoading: boolean;
+    public isLoading: boolean = false;
     public totalPoints: number;
     public scores: Score[];
 
@@ -24,7 +25,8 @@ export class StatiscticsComponent implements OnInit {
     public availableTeams: SelectItem[];
     public selectedTeamId: number;
 
-    constructor(private scoreService: ScoreService,
+    constructor(public authService: AuthService,
+                private scoreService: ScoreService,
                 private leagueService: LeagueService,
                 private teamService: TeamService) { }
 
@@ -38,6 +40,7 @@ export class StatiscticsComponent implements OnInit {
 
     public leagueChanged(event): void{
         if (this.selectedLeagueId != null){
+            this.isLoading = true;
             this.scores = null;
             this.getAllUsersAndScoresByLeagueId(this.selectedLeagueId);
             this.changeAvailableTeams();
@@ -59,7 +62,8 @@ export class StatiscticsComponent implements OnInit {
                     return -1;
                 else
                     return 1;
-            })
+            });
+            this.isLoading = false;
         });
     }
 

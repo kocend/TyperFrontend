@@ -37,6 +37,8 @@ export class TipsComponent implements OnInit {
 
     public eventAlreadyTiped = false;
 
+    public isLoading: boolean = false;
+
     constructor(private eventService: EventService,
         private leagueService: LeagueService,
         private teamService: TeamService,
@@ -65,9 +67,9 @@ export class TipsComponent implements OnInit {
         ]
 
         this.cols = [
+            { field: 'intRound', header: 'Kolejka' },
             { field: 'strHomeTeam', header: 'Gospodarz' },
             { field: 'strAwayTeam', header: 'Gość' },
-            { field: 'intRound', header: 'Kolejka' },
             { field: 'dateEvent', header: 'Data' },
             { field: 'strTimeLocal', header: 'Godzina' }
         ];
@@ -75,6 +77,8 @@ export class TipsComponent implements OnInit {
 
     public leagueChanged(event): void{
         if (this.selectedLeagueId != null) {
+            
+            this.isLoading = true;
 
             this.eventService.getNext15EventsByLeagueId(this.selectedLeagueId).subscribe(results => {
                 this.events = results.events;
@@ -83,6 +87,7 @@ export class TipsComponent implements OnInit {
                 this.resetSelectedTeamID();
                 this.changeAvailableRounds();
                 this.resetSelectedRound();
+                this.isLoading = false;
             });
         }
         else {
@@ -93,15 +98,16 @@ export class TipsComponent implements OnInit {
 
     public teamChanged(event): void {
         if (this.selectedTeamId != null) {
-
-            this.eventsFiltered = this.events.filter(event => {
-                if (event.idHomeTeam == this.selectedTeamId ||
-                    event.idAwayTeam == this.selectedTeamId)
-                    return true
-                else
-                    return false;
-            })
-            this.resetSelectedRound();
+            if(this.events != null){
+                this.eventsFiltered = this.events.filter(event => {
+                    if (event.idHomeTeam == this.selectedTeamId ||
+                        event.idAwayTeam == this.selectedTeamId)
+                        return true
+                    else
+                        return false;
+                })
+                this.resetSelectedRound();
+            }
         }
         else {
             this.eventsFiltered = this.events;
@@ -109,9 +115,8 @@ export class TipsComponent implements OnInit {
     }
 
     public roundChanged(event): void {
-        console.log("roundChanged()");
+
         if (this.selectedTeamId != null) {
-            console.log("roundChanged() selectedTeamId!=null");
             this.eventsFiltered = this.events.filter(element => element.intRound == this.selectedRound &&
                 (element.idHomeTeam == this.selectedTeamId ||
                     element.idAwayTeam == this.selectedTeamId));
@@ -125,22 +130,23 @@ export class TipsComponent implements OnInit {
     }
 
     public changeAvailableTeams(): void {
-        console.log("changeAvailableTeams()");
+
         this.availableTeams = [
             { label: 'Wybierz Zespół', value: null },
         ];
 
         this.teamService.getAllTeamsByLeagueId(this.selectedLeagueId).subscribe(data => {
-            data.teams.forEach(element => {
-                this.availableTeams.push(
-                    { label: element.strTeam, value: element.idTeam }
-                )
-            })
+            if(data.teams != null)
+                data.teams.forEach(element => {
+                    this.availableTeams.push(
+                        { label: element.strTeam, value: element.idTeam }
+                    )
+                })
         })
     }
 
     public changeAvailableRounds(): void {
-        console.log("changeAvailableRounds()");
+
         this.availableRounds = [
             { label: 'Wybierz Kolejkę', value: null },
         ];
@@ -148,12 +154,13 @@ export class TipsComponent implements OnInit {
         let rounds = [];
 
         this.eventService.getNext15EventsByLeagueId(this.selectedLeagueId).subscribe(data => {
-            data.events.forEach(event => {
-                if (!rounds.includes(event.intRound)) {
-                    rounds.push(event.intRound);
-                    this.availableRounds.push({ label: event.intRound.toString(), value: event.intRound });
-                }
-            })
+            if(data.events != null)
+                data.events.forEach(event => {
+                    if (!rounds.includes(event.intRound)) {
+                        rounds.push(event.intRound);
+                        this.availableRounds.push({ label: event.intRound.toString(), value: event.intRound });
+                    }
+                })
         })
     }
 

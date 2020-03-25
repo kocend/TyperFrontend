@@ -14,7 +14,8 @@ export class MenuBarComponent implements OnInit {
 
   ngOnInit() {
       this.items = [
-          {label: 'Moje Typy', icon: 'pi pi-th-large', routerLink: ['/tips']},
+          {label: 'Typuj', icon: 'pi pi-th-large', routerLink: ['/tips']},
+          {label: 'Moje Typy', icon: 'pi pi-th-large', routerLink: ['/my-tips']},
           {label: 'Statystyki', icon: 'fa fa-fw fa-bar-chart', routerLink: ['/statistics']},
           {label: 'Konto', icon: 'pi pi-home', routerLink: ['/account']},
           {label: 'Pomoc', icon: 'fa fa-fw fa-support'},

@@ -6,6 +6,7 @@ import { AccountComponent } from './components/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { MyTipsComponent } from './components/my-tips/my-tips.component';
 
 
 const routes: Routes = [];
@@ -15,6 +16,7 @@ const routes: Routes = [];
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'tips', component: TipsComponent, canActivate: [AuthGuardService] },
+    { path: 'my-tips', component: MyTipsComponent, canActivate: [AuthGuardService] },
     { path: 'statistics', component: StatiscticsComponent, canActivate: [AuthGuardService] },
     { path: 'account', component: AccountComponent, canActivate: [AuthGuardService] },
 

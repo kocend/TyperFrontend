@@ -63,6 +63,7 @@
             <tr class="ui-selectable-row"
                 [ngClass]="rowData.username == authService.currentUser.sub ? 'text-primary font-weight-bold' : null">
                 <td>
+                    <span class="ui-column-title">Pozycja</span>
                     {{rowIndex+1}}
                 </td>
                 <td *ngFor="let col of columns">

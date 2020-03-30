@@ -1,0 +1,25 @@
+.myHeaderTab {
+    text-align: center;
+}
+
+.myHeader {
+    font-size: x-large;
+}
+
+:host ::ng-deep .ui-dialog {
+    width: 40vw;
+}
+@media screen and (max-width: 40em) {
+    :host ::ng-deep .ui-dialog {
+        width: 90vw !important;
+        font-size: x-small !important;
+    }
+
+    .myHeader {
+        font-size: small;
+    }
+
+    .myHeaderTab {
+        text-align: left;
+    }
+}

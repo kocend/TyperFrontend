@@ -36,6 +36,7 @@ export class StatiscticsComponent implements OnInit {
         this.prepareAvailableLeagues();
         this.prepareCols();
         this.prepareAvailableTeams();
+        this.getAllUsersAndScores();
     }
 
     public leagueChanged(event): void{
@@ -46,35 +47,50 @@ export class StatiscticsComponent implements OnInit {
             this.changeAvailableTeams();
             this.resetSelectedTeamID();
         }
+        else{
+            this.getAllUsersAndScores();
+        }
     }
 
     public teamChanged(event): void {
         if (this.selectedTeamId != null) {
+            this.isLoading = true;
             this.scores = null;
             this.getAllUsersAndScoresByTeamId(this.selectedTeamId);
         }
     }
 
+    private getAllUsersAndScores(): void {
+        this.isLoading = true;
+        this.scoreService.getAllUsersAndScores().subscribe(scores => {
+            this.scores = scores;
+            this.isLoading = false;
+        })
+    }
+
     private getAllUsersAndScoresByLeagueId(leagueId: number): void {
         this.scoreService.getAllUsersAndScoresByLeagueID(leagueId).subscribe(scores => {
-            this.scores = scores.sort((a, b)=>{
-                if(a.points > b.points)
-                    return -1;
-                else
-                    return 1;
-            });
+            this.scores = scores;
+            // .sort((a, b)=>{
+            //     if(a.points > b.points)
+            //         return -1;
+            //     else
+            //         return 1;
+            // });
             this.isLoading = false;
         });
     }
 
     private getAllUsersAndScoresByTeamId(teamId: number): void {
         this.scoreService.getAllUsersAndScoresByTeamID(teamId).subscribe(scores => {
-            this.scores = scores.sort((a, b)=>{
-                if(a.points > b.points)
-                    return -1;
-                else
-                    return 1;
-            })
+            this.scores = scores;
+            // .sort((a, b)=>{
+            //     if(a.points > b.points)
+            //         return -1;
+            //     else
+            //         return 1;
+            // });
+            this.isLoading = false;
         });
     }
 
@@ -103,6 +119,7 @@ export class StatiscticsComponent implements OnInit {
 
     private prepareCols(): void {
         this.cols = [
+            { field: 'position', header: 'Pozycja' },
             { field: 'username', header: 'Użytkownik' },
             { field: 'points', header: 'Punkty' }
         ];

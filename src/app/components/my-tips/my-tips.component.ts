@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Tip } from 'src/app/models/tip';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TipService } from 'src/app/services/tip.service';
 import { EventService } from 'src/app/services/event.service';
-import { Event } from 'src/app/models/event';
 import { UserTip } from './models/user-tip';
 
 @Component({
@@ -12,6 +10,8 @@ import { UserTip } from './models/user-tip';
 })
 export class MyTipsComponent implements OnInit {
 
+    @ViewChild('tt') table; 
+
     public userTips: UserTip[] = [];
     public cols: any[];
 
@@ -19,22 +19,23 @@ export class MyTipsComponent implements OnInit {
                 private eventService: EventService) { }
 
     ngOnInit() {
+
         this.tipService.getAllMyTips().subscribe(tips => {
             tips.forEach(tip => {
                 this.eventService.getEventById(tip.game_id).subscribe(events => {
                     this.userTips.push(new UserTip(tip, events.events.pop()));
+                    this.table.reset();
                 });
             });
         });
 
         this.cols = [
+            { field: 'str_league', header: 'Liga' },
+            { field: 'round', header: 'Kolejka' },
             { field: 'str_home_team', header: 'Gospodarz' },
             { field: 'str_away_team', header: 'Gość' },
-            { field: 'home_score', header: 'Bramki gospodarzy' },
-            { field: 'away_score', header: 'Bramki gości' },
-            { field: 'user_tip_home_score', header: 'mój typ Bramki gospodarzy' },
-            { field: 'user_tip_away_score', header: 'mój typ Bramki gości' },
-            { field: 'user_score', header: 'moje punkty' }
+            { field: 'event_date', header: 'Data' },
+            { field: 'event_hour', header: 'Godzina' }
         ];
     }
 }

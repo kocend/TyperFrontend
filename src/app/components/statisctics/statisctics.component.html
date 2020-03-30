@@ -1,7 +1,13 @@
-<h4 class="m-2">Suma moich punktów: {{totalPoints}}</h4>
 
-<div class="row mt-1 mx-3 justify-content-center">
-    <div class="mx-3">
+<h5 class="m-2">Suma moich punktów: {{totalPoints}}</h5>
+
+<div class="row justify-content-center">
+    <h3>Klasyfikacja</h3>
+</div>
+
+<div class="row mt-1 mb-2 mx-3 justify-content-center">
+
+    <div class="mx-3 my-2">
         <p-dropdown 
             [options]="availableLeagues" 
             [(ngModel)]="selectedLeagueId" 
@@ -10,7 +16,8 @@
             (onChange)="leagueChanged($event)">
         </p-dropdown>
     </div>
-    <div class="mx-3">
+
+    <div class="mx-3 my-2">
         <p-dropdown 
             [options]="availableTeams" 
             [(ngModel)]="selectedTeamId" 
@@ -18,58 +25,51 @@
             (onChange)="teamChanged($event)">
         </p-dropdown>
     </div>
+
 </div>
 
-<div class="row justify-content-center">
-    <h3>Klasyfikacja</h3>
-</div>
-
-<div class="row justify-content-center">
-    <p-progressSpinner 
-        *ngIf="scores==null" 
-        [style]="{width: '50px', height: '50px'}" 
-        strokeWidth="8" 
-        fill="#EEEEEE" 
-        animationDuration=".5s">
-    </p-progressSpinner>
-</div>
-
-<p-table 
+<p-table #tt
         [columns]="cols" 
         [value]="scores" 
         [paginator]="true" 
-        [rows]="7"
+        [rows]="6"
         [rowHover]="true"
         [responsive]="true"
         [autoLayout]="true"
         [loading]="isLoading"
-        [reorderableColumns]="true">
+        [loadingIcon]="'fa fa-spinner fa-pulse fa-3x fa-fw'"
+        [reorderableColumns]="true"
+        [globalFilterFields]="['username']">
+
+        <ng-template pTemplate="caption">
+            <input 
+                type="text" 
+                pInputText size="25" 
+                placeholder="Szukaj użytkownika" 
+                (input)="tt.filterGlobal($event.target.value, 'contains')" 
+                style="width:auto">
+        </ng-template>
 
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="text-align: center;">
-                    Pozycja
-                </th>
                 <th *ngFor="let col of columns"
                     [pSortableColumn]="col.field" 
                     pReorderableColumn
-                    style="text-align: center;">
+                    class="text-center">
                     {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr class="ui-selectable-row"
                 [ngClass]="rowData.username == authService.currentUser.sub ? 'text-primary font-weight-bold' : null">
-                <td>
-                    <span class="ui-column-title">Pozycja</span>
-                    {{rowIndex+1}}
-                </td>
                 <td *ngFor="let col of columns">
                     <span class="ui-column-title">{{col.header}}</span>
                     {{rowData[col.field]}}
                 </td>
             </tr>
         </ng-template>
+
     </p-table>

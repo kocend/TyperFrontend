@@ -14,9 +14,10 @@ export class RegisterComponent implements OnInit {
 
     public displayRegisterDialog: boolean = true;
 
-    public invalidRegister: boolean = false;
     public passwordsEqual: boolean = true;
     public usernameFree: boolean = true;
+    public passwordLongEnough: boolean = true;
+    public allInputsFilled: boolean = true;
 
     public username: string;
     public password1: string;
@@ -30,47 +31,76 @@ export class RegisterComponent implements OnInit {
 
     public signUp(): void {
 
-        if(this.areInputsNoBlank()){
-
-                if(!this.arePasswordsEqual())
-                    this.passwordsEqual = false;
-                else{
-                    this.passwordsEqual = true;
-                    this.authService.isUsernameFree(this.username)
-                        .subscribe(result => {
-                            this.usernameFree = result.isFree;
-                            if(this.usernameFree){
-                                console.log("username is free");
-                                let userdata = new RegisterRequest;
-                                userdata.username = this.username;
-                                userdata.password = this.password1
-                                this.authService.register(userdata)
-                                    .subscribe(result => {
-                                            this.displayRegisterDialog = false;
-                                            this.router.navigate(['/login']);
-                                            this.messageService.add({ severity: 'success', summary: 'Pomyślna Rejestracja', detail: ""});
-                                    })
-                                }
-
-                         } );
+        if(this.areAllInputsFilled())
+        if(this.arePasswordsEqual())
+        if(this.isPasswordLongEnough())
+            this.authService.isUsernameFree(this.username)
+                .subscribe(result => {
+                    if(this.usernameFree = result.isFree){
+                        console.log("username is free");
+                        let userdata = new RegisterRequest;
+                        userdata.username = this.username;
+                        userdata.password = this.password1
+                        this.authService.register(userdata)
+                            .subscribe(result => {
+                                    this.displayRegisterDialog = false;
+                                    this.router.navigate(['/login']);
+                                    this.messageService.add({ severity: 'success', summary: 'Pomyślna Rejestracja', detail: ""});
+                            })
                     }
-            }
+                });
     }
 
-    public areInputsNoBlank(): boolean {
-        if(this.username?.trim().length != 0 &&
-            this.password1?.trim().length != 0 &&
-            this.password2?.trim().length != 0)
-            return true;
-        else 
-            return false
+    public resetValidation(){
+        console.log("resetting validation ...");
+        this.passwordsEqual = true;
+        this.usernameFree = true;
+        this.passwordLongEnough = true;
+        this.allInputsFilled = true;
     }
 
-    public arePasswordsEqual(): boolean {
-        if(this.password1 === this.password2)
-            return true;
-        else
+    private areAllInputsFilled(): boolean {
+        console.log("areAllInputsFilled()");
+        if(this.username?.trim().length > 0 &&
+            this.password1?.trim().length > 0 &&
+            this.password2?.trim().length > 0){
+                console.log("yes");
+                this.allInputsFilled = true;
+                return true;
+        }
+        else{
+            console.log("no");
+            this.allInputsFilled = false;
             return false;
+        }
+    }
+
+    private arePasswordsEqual(): boolean {
+        console.log("arePasswordsEqual()");
+        if(this.password1 === this.password2){
+            console.log("equal");
+            this.passwordsEqual = true;
+            return true;
+        }
+        else{
+            console.log("not equal");
+            this.passwordsEqual = false;
+            return false;
+        }
+    }
+
+    private isPasswordLongEnough(): boolean {
+        console.log("isPasswordLongEnough()");
+        if(this.password1?.trim().length >= 4){
+            console.log("yes");
+            this.passwordLongEnough = true;
+            return true;
+        }
+        else{
+            console.log("no");
+            this.passwordLongEnough = false;
+            return false;
+        }
     }
 
 }

@@ -22,6 +22,12 @@ export class ScoreService {
         return this.http.get<number>("http://localhost:8080/scores", httpOptions);
     }
 
+    public getAllUsersAndScores(): Observable<Score[]> {
+        httpOptions.headers =
+            httpOptions.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+        return this.http.get<Score[]>("http://localhost:8080/scores/all", httpOptions);
+    }
+
     public getAllUsersAndScoresByLeagueID(leagueID: number): Observable<Score[]> {
         httpOptions.headers =
             httpOptions.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));

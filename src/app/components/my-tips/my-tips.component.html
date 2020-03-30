@@ -1,59 +1,41 @@
-
 <p-table #tt
+        [columns]="cols"
         [value]="userTips" 
         [paginator]="true" 
         [rows]="7"
         [responsive]="true"
+        [autoLayout]="true"
+        [reorderableColumns]="true"
         [globalFilterFields]="['str_league','round','str_home_team','str_away_team','event_date','event_hour','user_score']">
-
+        
         <ng-template pTemplate="caption">
             <input 
                 type="text" 
-                pInputText size="50" 
+                pInputText size="25" 
                 placeholder="Szukaj" 
                 (input)="tt.filterGlobal($event.target.value, 'contains')" 
                 style="width:auto">
         </ng-template>
 
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Liga</th>
-                <th>Kolejka</th>
-                <th>Gospodarz</th>
-                <th>Gość</th>
-                <th>Data</th>
-                <th>Godzina</th>
+        <ng-template pTemplate="header" let-columns>
+            <tr class="text-center">
+                <th *ngFor="let col of columns"
+                    [pSortableColumn]="col.field" 
+                    pReorderableColumn>
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
                 <th>Wynik</th>
                 <th>Typowany wynik</th>
                 <th>Moje punkty</th>
             </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-userTip>
-            <tr style="text-align: center;">
-                <td>
-                    <span class="ui-column-title">Liga</span>
-                    {{userTip.str_league}}
-                </td>
-                <td>
-                    <span class="ui-column-title">Kolejka</span>
-                    {{userTip.round}}
-                </td>
-                <td>
-                    <span class="ui-column-title">Gospodarz</span>
-                    {{userTip.str_home_team}}
-                </td>
-                <td>
-                    <span class="ui-column-title">Gość</span>
-                    {{userTip.str_away_team}}
-                </td>
-                <td>
-                    <span class="ui-column-title">Data</span>
-                    {{userTip.event_date}}
-                </td>
-                <td>
-                    <span class="ui-column-title">Godzina</span>
-                    {{userTip.event_hour}}
+        <ng-template pTemplate="body" let-userTip let-rowData let-columns="columns">
+            <tr class="text-center">
+                <td *ngFor="let col of columns">
+                    <span class="ui-column-title">{{col.header}}</span>
+                    {{rowData[col.field]}}
                 </td>
                 <td>
                     <span class="ui-column-title">Wynik</span>
@@ -71,28 +53,3 @@
         </ng-template>
 
     </p-table>
-
-
-<!-- <p-table 
-        [columns]="cols" 
-        [value]="userTips" 
-        [paginator]="true" 
-        [rows]="5">
-
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                    {{col.header}}
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table> -->
-
-    

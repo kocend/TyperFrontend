@@ -11,40 +11,62 @@
             <h2 class="text-center">Rejestracja</h2>
         </p-header>
 
-        <div class="row m-4" *ngIf="!usernameFree" class="alert alert-danger">
-            Nazwa użytkownika niedostępna
-        </div>
+        <form [formGroup]="formGroup">
 
-        <div class="row m-4" *ngIf="!passwordsEqual" class="alert alert-danger">
-            Hasła nie są takie same
-        </div>
+            <div *ngIf="passwordFormControl.touched 
+                        && passwordConfirmationFormControl.touched 
+                        && formGroup.errors?.passwordsNotEqual"
+                 class="alert alert-danger">
+                    Hasła nie są takie same.
+            </div>
 
-        <div class="row m-4" *ngIf="!passwordLongEnough" class="alert alert-danger">
-            Hasło jest zbyt krótkie (min. 4 znaki)
-        </div>
+            <div *ngIf="usernameFormControl.errors?.notFree"
+                 class="alert alert-danger">
+                    Nazwa użytkownika zajęta.
+            </div>
 
-        <div class="row m-4" *ngIf="!allInputsFilled" class="alert alert-danger">
-            Wypełnij wszystkie pola
-        </div>
+            <div class="row m-4"> 
+                <input 
+                    type="text" 
+                    formControlName="username"  
+                    class="form-control" 
+                    placeholder="Nazwa Użytkownika"
+                    [ngClass]="{ 'is-invalid': usernameFormControl.touched 
+                                    && usernameFormControl.invalid
+                                    }">
 
-        <div class="row m-4">
-            <label for="inputUsername" class="sr-only">Nazwa użytkownika</label>  
-            <input type="text" id="inputUsernameRegister" name="username" [(ngModel)]="username" (click)="resetValidation()" class="form-control" placeholder="Nazwa Użytkownika" required autofocus>  
-        </div>  
+            </div>  
+    
+            <div class="row m-4">
+                <input 
+                    type="password" 
+                    formControlName="password"
+                    class="form-control" 
+                    placeholder="Hasło"
+                    [ngClass]="{ 'is-invalid': passwordFormControl.touched 
+                                    && passwordFormControl.invalid }"/>
+            </div>
+    
+            <div class="row m-4">
+                <input 
+                    type="password" 
+                    formControlName="passwordConfirmation" 
+                    class="form-control" 
+                    placeholder="Powtórz Hasło"
+                    [ngClass]="{ 'is-invalid': passwordConfirmationFormControl.touched 
+                                    && passwordConfirmationFormControl.invalid }">
+            </div>
+    
+            <div class="row m-4">
+                <button
+                    [disabled]="formGroup.invalid"
+                    class="btn btn-lg btn-primary btn-block" 
+                    (click)="signUp()">
+                    Zarejestruj się.
+                </button> 
+            </div>  
 
-        <div class="row m-4">
-            <label for="inputPassword" class="sr-only">Hasło</label>  
-            <input type="password" id="inputPasswordRegister1" name="password" [(ngModel)]="password1" (click)="resetValidation()" class="form-control" placeholder="Hasło" required>
-        </div>
-
-        <div class="row m-4">
-            <label for="inputPassword" class="sr-only">Powtórz hasło</label>  
-            <input type="password" id="inputPasswordRegister2" name="password" [(ngModel)]="password2" (click)="resetValidation()" class="form-control" placeholder="Powtórz Hasło" required>
-        </div>
-
-        <div class="row m-4">
-            <button class="btn btn-lg btn-primary btn-block" (click)="signUp()">Zarejestruj się.</button> 
-        </div>  
+        </form>
 
         <div class="row mt-4 mb-2 justify-content-center">
             <a [routerLink]="['/login']">Zaloguj się</a> 

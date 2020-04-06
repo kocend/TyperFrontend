@@ -18,8 +18,7 @@ export class MenuBarComponent implements OnInit {
           {label: 'Moje Typy', icon: 'pi pi-list', routerLink: ['/my-tips']},
           {label: 'Statystyki', icon: 'fa fa-fw fa-bar-chart', routerLink: ['/statistics']},
           {label: 'Konto', icon: 'pi pi-home', routerLink: ['/account']},
-          {label: 'Pomoc', icon: 'fa fa-fw fa-support'},
-          {label: 'Media', icon: 'fa fa-fw fa-twitter'}
+          {label: 'Pomoc', icon: 'fa fa-fw fa-support'}
       ];
   }
 

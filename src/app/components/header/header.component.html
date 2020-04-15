@@ -1,7 +1,22 @@
-<div *ngIf="authService.isLoggedIn()" class="row m-2 justify-content-end">
-    <p class="m-2">Witaj <b>{{ authService.currentUser.sub }}</b></p> 
-    <button class="btn btn-sm btn-outline-primary" type="button" (click)="logOut()">Wyloguj się</button>
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col-3">
+            <div *ngIf="showMiniMenu" class="m-2 justify-content-start">
+                <p-menu #menu [popup]="true" [model]="items"></p-menu>
+                <button class="btn btn-outline-primary" type="button" (click)="menu.toggle($event)">Menu</button>
+            </div>
+        </div>
+        
+        <div class="col-9">
+            <div *ngIf="authService.isLoggedIn()" class="row m-2 justify-content-end">
+                <p class="m-2">Witaj <b>{{ authService.currentUser.sub }}</b></p>
+                <button class="btn btn-sm btn-outline-primary" type="button" (click)="logOut()">Wyloguj się</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 <h1 class="text-center" style="font-size: xx-large; height: 10vh;">
     Typer Online

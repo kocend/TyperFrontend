@@ -25,6 +25,12 @@ export class MyTipsComponent implements OnInit {
                 this.eventService.getEventById(tip.game_id).subscribe(events => {
                     this.userTips.push(new UserTip(tip, events.events.pop()));
                     this.table.reset();
+                    this.userTips.sort((a, b) => {
+                        if(a.event_date < b.event_date)
+                            return -1;
+                        else
+                            return 1;
+                    });
                 });
             });
         });

@@ -19,24 +19,24 @@ export class ScoreService {
     public getAllUserScores(): Observable<number> {
         httpOptions.headers =
             httpOptions.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-        return this.http.get<number>("http://localhost:8080/scores", httpOptions);
+        return this.http.get<number>("http://typer.ddns.net:8081/scores", httpOptions);
     }
 
     public getAllUsersAndScores(): Observable<Score[]> {
         httpOptions.headers =
             httpOptions.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-        return this.http.get<Score[]>("http://localhost:8080/scores/all", httpOptions);
+        return this.http.get<Score[]>("http://typer.ddns.net:8081/scores/all", httpOptions);
     }
 
     public getAllUsersAndScoresByLeagueID(leagueID: number): Observable<Score[]> {
         httpOptions.headers =
             httpOptions.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-        return this.http.get<Score[]>(`http://localhost:8080/scores/leagues/${leagueID}`, httpOptions);
+        return this.http.get<Score[]>(`http://typer.ddns.net:8081/scores/leagues/${leagueID}`, httpOptions);
     }
 
     public getAllUsersAndScoresByTeamID(teamID: number): Observable<Score[]> {
         httpOptions.headers =
             httpOptions.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-        return this.http.get<Score[]>(`http://localhost:8080/scores/teams/${teamID}`, httpOptions);
+        return this.http.get<Score[]>(`http://typer.ddns.net:8081/scores/teams/${teamID}`, httpOptions);
     }
 }

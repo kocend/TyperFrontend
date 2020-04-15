@@ -52,8 +52,19 @@ export class TipsComponent implements OnInit {
         ];
 
         this.leagueService.getAllLeagues().subscribe(data => {
-            data.leagues.forEach(element => {
-                if (element.strSport == "Soccer")
+            data.leagues.forEach(async element => {
+                //if (element.strSport == "Soccer")
+                let amountOfEvents;
+                await this.eventService.getNext15EventsByLeagueId(element.idLeague)
+                    .first()
+                    .toPromise()
+                    .then(events => {
+                        if (events.events != null && events.events.length)
+                            amountOfEvents = events.events.length;
+                        else
+                            amountOfEvents = 0;
+                    })
+                if (amountOfEvents != 0)
                     this.availableLeagues.push({ label: element.strLeague, value: element.idLeague });
             });
         });
@@ -75,9 +86,9 @@ export class TipsComponent implements OnInit {
         ];
     }
 
-    public leagueChanged(event): void{
+    public leagueChanged(event): void {
         if (this.selectedLeagueId != null) {
-            
+
             this.isLoading = true;
 
             this.eventService.getNext15EventsByLeagueId(this.selectedLeagueId).subscribe(results => {
@@ -98,7 +109,7 @@ export class TipsComponent implements OnInit {
 
     public teamChanged(event): void {
         if (this.selectedTeamId != null) {
-            if(this.events != null){
+            if (this.events != null) {
                 this.eventsFiltered = this.events.filter(event => {
                     if (event.idHomeTeam == this.selectedTeamId ||
                         event.idAwayTeam == this.selectedTeamId)
@@ -136,7 +147,7 @@ export class TipsComponent implements OnInit {
         ];
 
         this.teamService.getAllTeamsByLeagueId(this.selectedLeagueId).subscribe(data => {
-            if(data.teams != null)
+            if (data.teams != null)
                 data.teams.forEach(element => {
                     this.availableTeams.push(
                         { label: element.strTeam, value: element.idTeam }
@@ -154,7 +165,7 @@ export class TipsComponent implements OnInit {
         let rounds = [];
 
         this.eventService.getNext15EventsByLeagueId(this.selectedLeagueId).subscribe(data => {
-            if(data.events != null)
+            if (data.events != null)
                 data.events.forEach(event => {
                     if (!rounds.includes(event.intRound)) {
                         rounds.push(event.intRound);
@@ -217,7 +228,7 @@ export class TipsComponent implements OnInit {
         this.selectedTeamId = null;
     }
 
-    public resetSelectedRound(): void { 
+    public resetSelectedRound(): void {
         this.selectedRound = null;
     }
 

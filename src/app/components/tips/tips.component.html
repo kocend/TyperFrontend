@@ -1,5 +1,18 @@
 <div class="content h-100 bg-light">
-    <div class="row m-1 pt-3">
+    <div class="ui-fluid">
+        <div class="ui-g">
+            <div class="ui-sm-12 ui-md-3">
+                <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
+            </div>
+            <div class="ui-sm-12 ui-md-3">
+                <p-dropdown [options]="availableTeams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value" (onChange)="teamChanged($event)"></p-dropdown>
+            </div>
+            <div class="ui-sm-12 ui-md-3">
+                <p-dropdown [options]="availableRounds" [(ngModel)]="selectedRound" [filter]="true" filterBy="label,value" (onChange)="roundChanged($event)"></p-dropdown>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row m-1 pt-3">
         <div class="mx-3 my-2">
             <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
         </div>
@@ -9,7 +22,7 @@
         <div class="mx-3 my-2">
             <p-dropdown [options]="availableRounds" [(ngModel)]="selectedRound" [filter]="true" filterBy="label,value" (onChange)="roundChanged($event)"></p-dropdown>
         </div>
-    </div>
+    </div> -->
     <div class="row m-1 justify-content-center">
         Dostępne mecze:
     </div>

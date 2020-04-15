@@ -14,15 +14,15 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     public isUsernameFree(username: string): Observable<any> {
-        return this.http.post<any>('http://localhost:8080/isUsernameFree', username);
+        return this.http.post<any>('http://typer.ddns.net:8081/isUsernameFree', username);
     }
 
     public register(userdata: RegisterRequest): Observable<any> {
-        return this.http.post<any>('http://localhost:8080/register', userdata);
+        return this.http.post<any>('http://typer.ddns.net:8081/register', userdata);
     }
 
     public login(credentials): Observable<any> {
-        return this.http.post<any>('http://localhost:8080/login', credentials)
+        return this.http.post<any>('http://typer.ddns.net:8081/login', credentials)
             .pipe(
                 map(response => {
 

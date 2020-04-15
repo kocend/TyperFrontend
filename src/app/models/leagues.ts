@@ -1,5 +1,9 @@
 import { League } from './league';
 
-export interface Leagues{
+export class Leagues{
     leagues: League [];
+
+    constructor(leagues: League[]){
+        this.leagues = [];
+    }
 }

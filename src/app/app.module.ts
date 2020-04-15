@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TabMenuModule } from 'primeng/tabmenu';
+import { MenuModule } from 'primeng/menu';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -32,6 +33,7 @@ import { AuthService } from './services/auth.service';
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthGuardService } from './services/auth-guard.service';
 import { MyTipsComponent } from './components/my-tips/my-tips.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { MyTipsComponent } from './components/my-tips/my-tips.component';
     HeaderComponent,
     LoginComponent,
     RegisterComponent,
-    MyTipsComponent
+    MyTipsComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ import { MyTipsComponent } from './components/my-tips/my-tips.component';
     FormsModule,
     ReactiveFormsModule,
     TabMenuModule,
+    MenuModule,
     DropdownModule,
     DialogModule,
     InputTextModule,

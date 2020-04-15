@@ -10,7 +10,7 @@
     width: 40vw;
 }
 
-@media screen and (max-width: 40em) {
+@media screen and (max-width: 50em) {
     :host ::ng-deep .ui-dialog {
         width: 90vw !important;
         font-size: x-small !important;

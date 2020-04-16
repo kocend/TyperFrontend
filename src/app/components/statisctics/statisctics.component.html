@@ -1,6 +1,6 @@
-<h5 class="m-2">Suma moich punktów: {{totalPoints}}</h5>
+<h5 class="m-2 text-light">Suma moich punktów: {{totalPoints}}</h5>
 
-<span class="text-center">
+<span class="text-center text-light">
     <h3>Klasyfikacja</h3>
 </span>
 
@@ -20,9 +20,18 @@
 
 </div>
 
-<p-table #tt [columns]="cols" [value]="scores" [paginator]="true" [rows]="6" [rowHover]="true" [responsive]="true"
-    [autoLayout]="true" [loading]="isLoading" [loadingIcon]="'fa fa-spinner fa-pulse fa-3x fa-fw'"
-    [reorderableColumns]="true" [globalFilterFields]="['username']">
+<p-table #tt 
+    [columns]="cols" 
+    [value]="scores" 
+    [paginator]="true" 
+    [rows]="10" 
+    [rowHover]="true" 
+    [responsive]="true"
+    [autoLayout]="true" 
+    [loading]="isLoading" 
+    [loadingIcon]="'fa fa-spinner fa-pulse fa-3x fa-fw'"
+    [reorderableColumns]="true" 
+    [globalFilterFields]="['username']">
 
     <ng-template pTemplate="caption">
         <input type="text" pInputText size="25" placeholder="Szukaj użytkownika"

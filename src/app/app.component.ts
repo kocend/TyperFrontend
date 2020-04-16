@@ -7,10 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     title = 'TyperOnline';
-    
-    public showMiniMenu: boolean = false;
-
-    public screenSizeChanged(event: boolean): void {
-        this.showMiniMenu = event;
-    }
 }

@@ -53,7 +53,6 @@ export class TipsComponent implements OnInit {
 
         this.leagueService.getAllLeagues().subscribe(data => {
             data.leagues.forEach(async element => {
-                //if (element.strSport == "Soccer")
                 let amountOfEvents;
                 await this.eventService.getNext15EventsByLeagueId(element.idLeague)
                     .first()

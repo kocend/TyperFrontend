@@ -1,23 +1,32 @@
-<div class="container">
-    <div class="row align-items-start">
-        <div class="col-3">
-            <div *ngIf="showMiniMenu" class="m-2 justify-content-start">
-                <p-menu #menu [popup]="true" [model]="items"></p-menu>
-                <button class="btn btn-outline-primary" type="button" (click)="menu.toggle($event)">Menu</button>
-            </div>
-        </div>
-        
-        <div class="col-9">
-            <div *ngIf="authService.isLoggedIn()" class="row m-2 justify-content-end">
-                <p class="m-2">Witaj <b>{{ authService.currentUser.sub }}</b></p>
-                <button class="btn btn-sm btn-outline-primary" type="button" (click)="logOut()">Wyloguj się</button>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">
+        </span>
+    </button>
+    <span class="navbar-brand">Typer Online</span>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/tips']">Typuj</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/my-tips']">Moje Typy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/statistics']">Statystyki</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/account']">Konto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/support']">Pomoc</a>
+            </li>
+        </ul>
+
+        <p class="m-2 text-white">Witaj <b>{{ authService.currentUser?.sub }}</b></p>
+        <button class="btn btn-outline-light my-2 my-sm-0" type="button" (click)="logOut()">Wyloguj się</button>
+
     </div>
-</div>
-
-
-
-<h1 class="text-center" style="font-size: xx-large; height: 10vh;">
-    Typer Online
-</h1>
+</nav>

@@ -20,10 +20,8 @@ export class LoginComponent implements OnInit {
     }
 
     public signIn(credentials): void {
-        console.log("credentials");
         this.authService.login(credentials)
             .subscribe(result => {
-                console.log(result);
                 if (result){
                     this.displayLoginDialog = false;
                     this.router.navigate(['/tips']);

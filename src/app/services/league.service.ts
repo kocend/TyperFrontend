@@ -20,7 +20,7 @@ export class LeagueService {
                 tap(elem => console.log(elem)),
                 map(elem => {
                     let leagues: Leagues = new Leagues([]);
-                    leagues.leagues = elem.leagues.filter(league => league.strSport == "Soccer");
+                    leagues.leagues = elem.leagues.filter(league => league.strSport == "Soccer" && league.strLeague != "_No League");
                     return leagues;
                 }),
                 tap(elem => console.log(elem))

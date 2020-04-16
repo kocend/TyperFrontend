@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { RegisterRequest } from '../models/register-request';
@@ -14,7 +14,13 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     public isUsernameFree(username: string): Observable<any> {
-        return this.http.post<any>('http://typer.ddns.net:8081/isUsernameFree', username);
+        return this.http.post<any>('http://typer.ddns.net:8081/isUsernameFree', username)
+            .pipe(
+                catchError(error => {
+                    console.log("server is shutdown");
+                    return throwError(error);
+                })
+            )
     }
 
     public register(userdata: RegisterRequest): Observable<any> {
@@ -25,11 +31,7 @@ export class AuthService {
         return this.http.post<any>('http://typer.ddns.net:8081/login', credentials)
             .pipe(
                 map(response => {
-
-                    console.log(response);
                     let res: HttpResponse<any> = new HttpResponse(response);
-                    console.log(res);
-                    console.log(response.jwt);
                     if (res.status && response.jwt) {
                         localStorage.setItem('token', response.jwt);
                         return true;

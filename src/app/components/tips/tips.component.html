@@ -1,13 +1,13 @@
 <div class="content">
     <div class="ui-fluid">
         <div class="ui-g">
-            <div class="ui-sm-12 ui-md-3">
+            <div class="ui-sm-12 ui-md-4">
                 <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true" filterBy="label,value.strLeague" (onChange)="leagueChanged($event)"></p-dropdown>
             </div>
-            <div class="ui-sm-12 ui-md-3">
+            <div class="ui-sm-12 ui-md-4">
                 <p-dropdown [options]="availableTeams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value" (onChange)="teamChanged($event)"></p-dropdown>
             </div>
-            <div class="ui-sm-12 ui-md-3">
+            <div class="ui-sm-12 ui-md-4">
                 <p-dropdown [options]="availableRounds" [(ngModel)]="selectedRound" [filter]="true" filterBy="label,value" (onChange)="roundChanged($event)"></p-dropdown>
             </div>
         </div>

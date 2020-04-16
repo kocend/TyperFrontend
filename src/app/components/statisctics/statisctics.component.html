@@ -1,23 +1,25 @@
-<h5 class="m-2 text-light">Suma moich punktów: {{totalPoints}}</h5>
+<div class=" h-100 bg-dark">
+    <h5 class="p-2 ml-2 text-light">Suma moich punktów: {{totalPoints}}</h5>
 
-<span class="text-center text-light">
-    <h3>Klasyfikacja</h3>
-</span>
+    <span class="text-center text-light">
+        <h3>Klasyfikacja</h3>
+    </span>
 
-<div class="row mt-1 mb-2 mx-3 justify-content-center">
+    <div class="row mt-1 pb-2 mx-3 justify-content-center">
 
-    <div class="mx-3 my-2">
-        <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true"
-            filterBy="label,value.strLeague" (onChange)="leagueChanged($event)">
-        </p-dropdown>
+        <div class="mx-3 my-2">
+            <p-dropdown [options]="availableLeagues" [(ngModel)]="selectedLeagueId" [filter]="true"
+                filterBy="label,value.strLeague" (onChange)="leagueChanged($event)">
+            </p-dropdown>
+        </div>
+
+        <div class="mx-3 my-2">
+            <p-dropdown [options]="availableTeams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value"
+                (onChange)="teamChanged($event)">
+            </p-dropdown>
+        </div>
+
     </div>
-
-    <div class="mx-3 my-2">
-        <p-dropdown [options]="availableTeams" [(ngModel)]="selectedTeamId" [filter]="true" filterBy="label,value"
-            (onChange)="teamChanged($event)">
-        </p-dropdown>
-    </div>
-
 </div>
 
 <p-table #tt 

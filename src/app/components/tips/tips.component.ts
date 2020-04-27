@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { SelectItem } from 'primeng/api/selectitem';
 import { LeagueService } from 'src/app/services/league.service';
@@ -39,6 +39,8 @@ export class TipsComponent implements OnInit {
 
     public isLoading: boolean = false;
 
+    public numberOfRows: number;
+
     constructor(private eventService: EventService,
         private leagueService: LeagueService,
         private teamService: TeamService,
@@ -46,7 +48,9 @@ export class TipsComponent implements OnInit {
         private messageService: MessageService) { }
 
     ngOnInit() {
-        console.log("ngOnInit()");
+        let availibleSpace = window.innerHeight*0.68;
+        this.numberOfRows = availibleSpace/45;
+
         this.availableLeagues = [
             { label: 'Wybierz Ligę', value: null },
         ];
@@ -195,7 +199,7 @@ export class TipsComponent implements OnInit {
                         home_score: this.homeTeamScore,
                         away_score: this.awayTeamScore,
                         user_score: null
-                    }).subscribe(() => console.log("successfully updated record!"));
+                    }).subscribe(() => null);
             else
                 this.tipService.addTip(
                     {
@@ -205,7 +209,7 @@ export class TipsComponent implements OnInit {
                         home_score: this.homeTeamScore,
                         away_score: this.awayTeamScore,
                         user_score: null
-                    }).subscribe(() => console.log("successfully added record!"));
+                    }).subscribe(() => null);
 
             this.messageService.add({ severity: 'success', summary: 'Zapisano Typ', detail: this.selectedEvent.strEvent + " " + this.homeTeamScore + ":" + this.awayTeamScore });
             this.homeTeamScore = null;
@@ -240,5 +244,11 @@ export class TipsComponent implements OnInit {
             this.homeTeamScore = data.home_score;
             this.awayTeamScore = data.away_score;
         })
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        let availibleSpace = window.innerHeight*0.68;
+        this.numberOfRows = availibleSpace/45;
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ScoreService } from 'src/app/services/score.service';
 import { SelectItem } from 'primeng/api/selectitem';
 import { Score } from 'src/app/models/score';
@@ -25,12 +25,17 @@ export class StatiscticsComponent implements OnInit {
     public availableTeams: SelectItem[];
     public selectedTeamId: number;
 
+    public numberOfRows: number;
+
     constructor(public authService: AuthService,
                 private scoreService: ScoreService,
                 private leagueService: LeagueService,
                 private teamService: TeamService) { }
 
     ngOnInit() {
+        let availibleSpace = window.innerHeight*0.6;
+        this.numberOfRows = availibleSpace/29;
+
         this.scores = [];
         this.getUserScore();
         this.prepareAvailableLeagues();
@@ -126,7 +131,6 @@ export class StatiscticsComponent implements OnInit {
     }
 
     private changeAvailableTeams(): void {
-        console.log("changeAvailableTeams()");
         this.availableTeams = [
             { label: 'Wybierz Zespół', value: null },
         ];
@@ -142,6 +146,12 @@ export class StatiscticsComponent implements OnInit {
 
     private resetSelectedTeamID(): void {
         this.selectedTeamId = null;
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        let availibleSpace = window.innerHeight*0.6;
+        this.numberOfRows = availibleSpace/29;
     }
 
 }

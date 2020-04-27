@@ -17,13 +17,11 @@ export class LeagueService {
     getAllLeagues(): Observable<Leagues> {
         return this.http.get<Leagues>("https://www.thesportsdb.com/api/v1/json/1/all_leagues.php")
             .pipe(
-                tap(elem => console.log(elem)),
                 map(elem => {
                     let leagues: Leagues = new Leagues([]);
                     leagues.leagues = elem.leagues.filter(league => league.strSport == "Soccer" && league.strLeague != "_No League");
                     return leagues;
-                }),
-                tap(elem => console.log(elem))
+                })
             );
     }
 }

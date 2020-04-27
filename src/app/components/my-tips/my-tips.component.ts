@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { TipService } from 'src/app/services/tip.service';
 import { EventService } from 'src/app/services/event.service';
 import { UserTip } from './models/user-tip';
@@ -10,15 +10,19 @@ import { UserTip } from './models/user-tip';
 })
 export class MyTipsComponent implements OnInit {
 
-    @ViewChild('tt') table; 
+    @ViewChild('tt') table;
 
     public userTips: UserTip[] = [];
     public cols: any[];
 
+    public numberOfRows: number;
+
     constructor(private tipService: TipService,
-                private eventService: EventService) { }
+        private eventService: EventService) { }
 
     ngOnInit() {
+        let availibleSpace = window.innerHeight*0.6;
+        this.numberOfRows = availibleSpace/29;
 
         this.tipService.getAllMyTips().subscribe(tips => {
             tips.forEach(tip => {
@@ -26,7 +30,7 @@ export class MyTipsComponent implements OnInit {
                     this.userTips.push(new UserTip(tip, events.events.pop()));
                     this.table.reset();
                     this.userTips.sort((a, b) => {
-                        if(a.event_date < b.event_date)
+                        if (a.event_date < b.event_date)
                             return -1;
                         else
                             return 1;
@@ -43,5 +47,11 @@ export class MyTipsComponent implements OnInit {
             { field: 'event_date', header: 'Data' },
             { field: 'event_hour', header: 'Godzina' }
         ];
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        let availibleSpace = window.innerHeight*0.6;
+        this.numberOfRows = availibleSpace/29;
     }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Tip } from '../models/tip';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 const httpOptions = {
     headers: new HttpHeaders({
